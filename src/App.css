@@ -3,8 +3,28 @@
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+  /* animation: App-logo-spin infinite 1s linear; */
+  height: 35vmin;
+  transition: all 1s;
+
+}
+
+.App-logo-large{
+  animation: App-logo-back-spin infinite 1s linear;
+  height: 60vmin;
+}
+
+
+.App-logo-flush{
+  animation: App-logo-back-spin infinite .5s linear;
+  transition: all 3s;
+  height: 0vmin;
+}
+
+.App-logo-unflush{
+  animation: App-logo-spin infinite .5s linear;
+  transition: all 3s;
+  height: 60vmin;
 }
 
 .App-header {
@@ -28,5 +48,14 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes App-logo-back-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
   }
 }
