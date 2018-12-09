@@ -4,7 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 import ReactHtmlParser from 'react-html-parser';
-
+import {Link} from 'react-router-dom'
 
 class Toilet extends Component {
     constructor(props) {
@@ -80,7 +80,7 @@ class Toilet extends Component {
                     <input type="text" value={this.state.action} onChange={this.handleChange} />
                     <button type="submit" disabled={["flush", "unflush"].indexOf(this.state.action) === -1}>Submit</button>
                 </form>
-                <a href="/help/">HelpPage</a>
+                <Link to={`/help/`} >Help</Link>
             </div>
 
         );

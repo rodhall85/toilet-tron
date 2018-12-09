@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom'
 
 class Help extends Component {
     render() {
         return (
             <div>
                 <h1>Flush / Unflush</h1>
-                <a href="/">Back</a>
+                <Link to={``}>Back</Link>
             </div>
         );
     }
