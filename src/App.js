@@ -1,96 +1,55 @@
 import React, { Component } from 'react';
-
-import logo from './logo.svg';
 import './App.css';
-import axios from 'axios';
-import ReactHtmlParser from 'react-html-parser';
+import { createStore } from 'redux';
+import { Provider, connect } from 'react-redux';
+import Toilet from './Toilet';
+import Help from './Help';
+import Fourzerofour from './Fourzerofour';
+import { Route, Switch } from 'react-router-dom'
+//import { Switch } from 'react-router'
 
+const jokeStoreReducer = (state = { joke: 'cue laughs' }, action) => {
+  const newState = {
+    ...state,
+    joke: action.payload
+  }
+  return newState;
+}
+
+const store = createStore(jokeStoreReducer);
+
+const ToiletWrapped = connect(state => { return { joke: state.joke } })(Toilet);
 
 class App extends Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      info: 'ToileTron',
-      className: 'App-logo',
-      action: '',
-    }
-
-    
-
-    const child = <div>5000</div>
-    this.stuff = {
-      className: "bob",
-      children: child
-    }
-
-
-  }
 
   componentDidMount() {
     // make api reqest to http://api.icndb.com/jokes/random\?firstName\=Toilet
     // update state.joke
     // display state.joke
-    this.loadJoke();
-  }
-
-  loadJoke = async () => {
-    const response = await axios({
-    url: 'http://api.icndb.com/jokes/random/firstName/Toilet'
-     });
-
-    this.props.dispatch({type:'updateJoke', payload:response.data.value.joke});
-  }
-
-  changeSize = (size) => {
-    
-    const classSizeName = `App-logo-${size}`;
-    this.setState({
-      ...this.state,
-      className: `App-logo ${classSizeName}`
-    })
-  }
-
-  submitStuff = (event) => {
-    event.preventDefault();
-    this.loadJoke();
-    this.setState({
-      ...this.state,
-      className: `App-logo-${this.state.action}`
-    })
 
   }
 
-  handleChange = (event) => {
-    const {value} = event.target;
-    this.setState({
-      ...this.state,
-      action: value
-    })
-  }
 
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className={this.state.className} alt="logo"  onMouseEnter={() => this.changeSize('large')} onMouseLeave={() => this.changeSize('small')} />
-          <div>{this.state.info}</div>
-          <div>{ReactHtmlParser(this.props.joke)}</div>
-          <form onSubmit={this.submitStuff}>
-            <input type="text" value={this.state.action} onChange={this.handleChange}/>
-            <button type="submit" disabled={["flush", "unflush"].indexOf(this.state.action) === -1}>Submit</button>
-          </form>
+          <Provider store={store}>
+            <Switch location={this.props.location}>
+
+
+              <Route exact path="/help/" component={Help} />
+              <Route exact path="/" component={ToiletWrapped} />
+              <Route exact path="*" component={Fourzerofour} />
+
+            </Switch>
+          </Provider>
         </header>
       </div>
+
     );
   }
 }
-
-
-
-
-
-
-
 
 export default App;
